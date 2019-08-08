@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   icon: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(2, 0),
   },
 
   menuButton: {
@@ -82,6 +82,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+
+  navLink: {
+    textDecoration: 'none', color: 'unset' 
+    }
   }
 
 }));
@@ -145,37 +149,48 @@ export default function AppBarWithDrawer(props) {
         </div>
 
         <List>
-            <ListItem button key='home'>
-              <ListItemIcon><HomeIcon className={classes.icon} /></ListItemIcon>
-              <NavLink to='/'>Home</NavLink>
-              
 
+
+          <NavLink to='/' style={{ textDecoration: 'none', color: 'unset' }}>
+            <ListItem button key="home">
+                <ListItemIcon><HomeIcon className={classes.icon} /></ListItemIcon>
+              <ListItemText primary="Home"/>
             </ListItem>
+          </NavLink>
+           
         </List>
 
         <Divider />
         <List>
-            <ListItem button key='books'>
-              <ListItemIcon><LibraryBooks /></ListItemIcon>
-              <NavLink to='/book'>Books</NavLink>
+            <NavLink to='/book' style={{ textDecoration: 'none', color: 'unset' }}>
+              <ListItem button key='books'>
+                <ListItemIcon><LibraryBooks /></ListItemIcon>
+                <ListItemText primary="Books"/>
+              </ListItem>            
+            </NavLink>
               
 
-            </ListItem>
         </List>
         <Divider />
         <List>
-            <ListItem button key='paragraphs'>
-              <ListItemIcon><Subject /></ListItemIcon>
-              <NavLink to='/quote'>Sentences</NavLink>
-            </ListItem>
+
+            <NavLink to='/quote' style={{ textDecoration: 'none', color: 'unset' }}>
+              <ListItem button key='quotes'>
+                <ListItemIcon><Subject /></ListItemIcon>
+                <ListItemText primary="Sentences"/>
+              </ListItem>            
+            </NavLink>            
         </List>
 
        <Divider />
         <List>
-            <ListItem button key='words'>
-              <ListItemIcon><WbAuto /></ListItemIcon>
-              <NavLink to='/word'>Words</NavLink>
-            </ListItem>
+       
+             <NavLink to='/word' style={{ textDecoration: 'none', color: 'unset' }}>
+              <ListItem button key='words'>
+                <ListItemIcon><WbAuto /></ListItemIcon>
+                <ListItemText primary="Words"/>
+              </ListItem>            
+            </NavLink>               
         </List>
 
 
