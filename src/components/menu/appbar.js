@@ -3,124 +3,152 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import theme from '../theme/theme';
+import clsx from 'clsx';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import Box from '@material-ui/core/Box';
 
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchDefinitions } from "../../actions/definitions";
 
-
+const drawerWidth = 240;
 
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    display: 'flex',
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
+
+  hide: {
+    display: 'none',
+  },
+
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },  
+
+  drawerPaper: {
+    width: drawerWidth,
+  },
+
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+
   title: {
     flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 300,
-      '&:focus': {
-        width: 400,
-      },
-    },
-  },
+  }
+
 }));
 
-function SearchAppBar(props) {
+export default function AppBarWithDrawer(props) {
   const classes = useStyles();
-  const [searchText, setSearchText] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const handleKeyUp = event => {
-    //alert(searchText);
-    if (event.key ==  'Enter') {
+  function handleDrawerOpen() {
+    setOpen(true);
+  }
 
-        //console.log('Enter pressed: ', searchText);
+  function handleDrawerClose() {
+    setOpen(false);
+  }
 
-        props.fetchDefinitions(searchText);
+  function toggleDrawerState() {
+    setOpen(!open);
+  }
 
-    }
-  };
+
 
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
-        <AppBar position="static">
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <IconButton
               edge="start"
-              className={classes.menuButton}
               color="inherit"
               aria-label="open drawer"
+              onClick={toggleDrawerState}
+              edge="start"
+              className={classes.menuButton}
             >
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h5"  noWrap>
-              English Dictionary
+              
+            English Dictionary
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                value = {searchText}
-                onChange={e => setSearchText(e.target.value)}
-                onKeyUp={e => handleKeyUp(e)}
-              />
-            </div>
-          </Toolbar>
+         </Toolbar>
         </AppBar>
+
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+
+       <div><Box m={8} /></div>
+
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>        
       </div>
+      <div><Box m={4} /></div>
     </MuiThemeProvider>
     
   );
@@ -128,14 +156,3 @@ function SearchAppBar(props) {
 
 
 
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    { 
-      fetchDefinitions
-    }, dispatch);
-};
-
-
-
-export default connect(null, mapDispatchToProps)(SearchAppBar);

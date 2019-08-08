@@ -1,12 +1,10 @@
 import axios from 'axios';
 import { FETCH_DEFINITIONS } from './'
-
+import { API_ROOT } from '../api/'
 
 export const fetchDefinitions = (word) => async dispatch => {
 
-	//console.log('fetch definition');
-	
-	const response = await axios.get("http://localhost:5000/definition/" + word);
+	const response = await axios.get(`${API_ROOT}/definition/${word}`);
 
 	const data = {search: word, items: response.data};
 	
