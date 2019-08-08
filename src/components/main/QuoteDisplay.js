@@ -58,88 +58,9 @@ const useStyles = makeStyles(theme => ({
 
 
 
-function MainDisplay(props) {
+export default function QuoteDisplay(props) {
   const classes = useStyles();
-  //if (props.items) {console.log(props.items)}  
-
-  const renderHeadWord = () => {
-    return (
-      <Typography gutterBottom variant="h3" component="h2" color="primary">
-        <Box fontWeight="fontWeightBold">
-         {props.search}
-        </Box>
-      </Typography>
-    );
-  }  
-
-
-
-
-  const renderSynonyms = synonyms => {
-
-    if(synonyms){
-      return(
-        <Box fontStyle="normal" m={1}>
-          
-             SYNONYMS: {synonyms}
-        </Box>
-      )
-    }
-    else {return null}
-    
-
-  }
-
-
-  const renderDefinitions = meanings => {
-
-
-    return(
-      meanings.map((meaning, index) =>(
-
-        
-          <Typography key = {uuid.v4()} variant="h6" component="h2">
-            
-            <Box fontWeight="fontWeightBold"  m={1}>
-             {index + 1}. {meaning['definition']}
-            </Box>
-          
-            <Box fontStyle="italic" m={1}>
-          
-             {meaning['example']}
-            </Box>
-                      
-            {renderSynonyms(meaning['synonyms'])}
-          </Typography>
-        
-
-    ))
-  )}
-
-  const renderCard = word => {
-    return (    
-    <CardContent className={classes.cardContent}>
-       
-      <Typography gutterBottom variant="h6" component="h2" color="secondary">
-         {word['category'].toUpperCase()}
-      </Typography>
-
-      <Typography gutterBottom variant="h6" component="h2">
-         {word['phonetic']}
-      </Typography>
-
-      {renderDefinitions(word['meaning'])}
-
-
-      <Typography gutterBottom variant="h6" component="h2">
-         ORIGIN: {word['origin']}
-      </Typography>
-
-    </CardContent>
-    )
-  }  
-
-
+  
 
   return (
 
@@ -152,31 +73,48 @@ function MainDisplay(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="xl">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              English Dictionary
+              Sentences
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              A collection of word definitions from Oxford, Cambrige, Google and other dictionaries.
+              A collection of great sentences from books.
             </Typography>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="xl">
           {/* End hero unit */}
-          {renderHeadWord()}
 
           <Grid container spacing={4}>
-                     
-            {props.items.map((item, index) => (
 
-                <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>               
-                    {renderCard(item)}
-                  </Card>
-                </Grid>
+                <Grid item key='card_1' xs={12} sm={6} md={4}>
+                	
+                  	<Card className={classes.card}>  
+                  		<CardContent className={classes.cardContent}>             
+                     		<Typography gutterBottom variant="h6" component="h2">
+         					 	Book 1
+      						</Typography>
+      					</CardContent>	
+                  	</Card>
+                  	
+                </Grid>   
 
-            ))}
-
-            
-
+                <Grid item key='card_2' xs={12} sm={6} md={4}>
+                  	<Card className={classes.card}>  
+                  		<CardContent className={classes.cardContent}>             
+                     		<Typography gutterBottom variant="h6" component="h2">
+         					 	Book 2
+      						</Typography>
+      					</CardContent>	
+                  	</Card>
+                </Grid>  
+                <Grid item key='card_3' xs={12} sm={6} md={4}>
+                  	<Card className={classes.card}>  
+                  		<CardContent className={classes.cardContent}>             
+                     		<Typography gutterBottom variant="h6" component="h2">
+         					 	Book 3
+      						</Typography>
+      					</CardContent>	
+                  	</Card>
+                </Grid>  
           </Grid>
         </Container>
       </main>
@@ -198,11 +136,5 @@ function MainDisplay(props) {
 
 
 
-const mapStateToProps = state => ({
-    items: state.definitionReducer.items,
-    search: state.definitionReducer.search
-   
-});
 
-export default connect(mapStateToProps, null)(MainDisplay);
 

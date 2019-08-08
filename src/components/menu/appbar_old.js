@@ -18,23 +18,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 import Box from '@material-ui/core/Box';
 
-import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import Subject from '@material-ui/icons/Subject';
-import WbAuto from '@material-ui/icons/WbAuto';
-import SvgIcon from '@material-ui/core/SvgIcon';
 
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
-
-
-import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -45,10 +33,6 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-  },
-
-  icon: {
-    margin: theme.spacing(2),
   },
 
   menuButton: {
@@ -143,44 +127,24 @@ export default function AppBarWithDrawer(props) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
-
-        <List>
-            <ListItem button key='home'>
-              <ListItemIcon><HomeIcon className={classes.icon} /></ListItemIcon>
-              <NavLink to='/'>Home</NavLink>
-              
-
-            </ListItem>
-        </List>
-
         <Divider />
         <List>
-            <ListItem button key='books'>
-              <ListItemIcon><LibraryBooks /></ListItemIcon>
-              <NavLink to='/book'>Books</NavLink>
-              
-
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
             </ListItem>
+          ))}
         </List>
         <Divider />
         <List>
-            <ListItem button key='paragraphs'>
-              <ListItemIcon><Subject /></ListItemIcon>
-              <NavLink to='/quote'>Sentences</NavLink>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
             </ListItem>
+          ))}
         </List>
-
-       <Divider />
-        <List>
-            <ListItem button key='words'>
-              <ListItemIcon><WbAuto /></ListItemIcon>
-              <NavLink to='/word'>Words</NavLink>
-            </ListItem>
-        </List>
-
-
-
-
       </Drawer>        
       </div>
       <div><Box m={4} /></div>

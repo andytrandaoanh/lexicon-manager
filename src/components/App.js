@@ -1,14 +1,25 @@
 import React from 'react';
 import AppBarWithDrawer from './menu/appbar';
-import ClippedDrawer from './menu/appbar2';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import MainDisplay from './main/main';
+import MainDisplay from './main/MainDisplay';
+import BookDisplay from './main/BookDisplay';
+import QuoteDisplay from './main/QuoteDisplay';
+import WordDisplay from './main/WordDisplay';
 
 function App () {
 	return (
 		<div className = "App">
-			<AppBarWithDrawer />
-			<MainDisplay />      
+			<BrowserRouter>
+				<AppBarWithDrawer />				
+					<Switch>	    		
+			    		<Route path='/' exact component={MainDisplay} />
+			    		<Route path='/book' exact component={BookDisplay} />
+			    		<Route path='/word' exact component={WordDisplay} />
+			    		<Route path='/quote' exact component={QuoteDisplay} />
+
+				    </Switch>
+			</BrowserRouter>      
     	</div>
 	)
 }
